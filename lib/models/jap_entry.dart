@@ -1,5 +1,3 @@
-// ignore_for_file: hash_and_equals
-
 import 'package:json_annotation/json_annotation.dart';
 
 part 'jap_entry.g.dart';
@@ -20,14 +18,14 @@ class JapEntry {
   Map<String, dynamic> toJson() => _$JapEntryToJson(this);
 
   @override
+  // ignore: hash_and_equals
   bool operator ==(Object other) {
     if (identical(this, other)) {
       return true;
     }
-    if (runtimeType != other.runtimeType) {
+    if (other is! JapEntry) {
       return false;
     }
-    other = other as JapEntry;
     return timestamp == other.timestamp && count == other.count;
   }
 }

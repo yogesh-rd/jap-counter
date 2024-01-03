@@ -1,47 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:jap_counter/dialogs/enter_number_dialog.dart';
-import '/stores/counter_store.dart';
 import 'package:provider/provider.dart';
 
+import '../dialogs/enter_number_dialog.dart';
 import '../widgets/popup_menu.dart';
+import '/stores/counter_store.dart';
 
 class CounterPage extends StatelessWidget {
   const CounterPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Counter',
-        ),
-        actions: [
-          Consumer<CounterStore>(
-            builder: (_, store, child) => store.inEditMode
-                ? IconButton(
-                    iconSize: 32,
-                    onPressed: () {
-                      store.setInEditMode(false);
-                    },
-                    icon: const Icon(
-                      Icons.done,
-                    ),
-                  )
-                : const PopupMenu(),
+  Widget build(BuildContext context) => Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(
+            'Counter',
           ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Consumer<CounterStore>(
-                builder: (_, store, __) {
-                  return Row(
+          actions: [
+            Consumer<CounterStore>(
+              builder: (_, store, child) => store.inEditMode
+                  ? IconButton(
+                      iconSize: 32,
+                      onPressed: () {
+                        store.setInEditMode(false);
+                      },
+                      icon: const Icon(
+                        Icons.done,
+                      ),
+                    )
+                  : const PopupMenu(),
+            ),
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Consumer<CounterStore>(
+                  builder: (_, store, __) => Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
@@ -90,16 +88,13 @@ class CounterPage extends StatelessWidget {
                         ),
                       ),
                     ],
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Consumer<CounterStore>(
-                builder: (_, store, __) {
-                  return Wrap(
-                    direction: Axis.horizontal,
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Consumer<CounterStore>(
+                  builder: (_, store, __) => Wrap(
                     spacing: 8,
                     runSpacing: 8,
                     children: [
@@ -129,32 +124,30 @@ class CounterPage extends StatelessWidget {
                           ),
                         )
                     ],
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Consumer<CounterStore>(
-                builder: (_, store, __) => FilledButton(
-                  onPressed: store.inEditMode
-                      ? null
-                      : () {
-                          showEnterNumberDialog(
-                            context,
-                            onValidValueSubmitted: store.logJaps,
-                            hintText: 'Custom count',
-                          );
-                        },
-                  child: const Text('Custom Value'),
+                  ),
                 ),
-              )
-            ],
+                const SizedBox(
+                  height: 16,
+                ),
+                Consumer<CounterStore>(
+                  builder: (_, store, __) => FilledButton(
+                    onPressed: store.inEditMode
+                        ? null
+                        : () {
+                            showEnterNumberDialog(
+                              context,
+                              onValidValueSubmitted: store.logJaps,
+                              hintText: 'Custom count',
+                            );
+                          },
+                    child: const Text('Custom Value'),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class _IncrementButton extends StatelessWidget {
@@ -164,34 +157,32 @@ class _IncrementButton extends StatelessWidget {
   const _IncrementButton({super.key, required this.value, required this.onTap});
 
   @override
-  Widget build(BuildContext context) {
-    return Consumer<CounterStore>(
-      builder: (_, store, __) => Stack(
-        alignment: AlignmentDirectional.topEnd,
-        children: [
-          FilledButton(
-            onPressed: () {
-              if (store.inEditMode) {
-                store.removeIncrement(value);
-              } else {
-                onTap.call(value);
-              }
-            },
-            child: Text('+$value'),
-          ),
-          if (store.inEditMode)
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.red.shade600,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: const Icon(
-                Icons.cancel,
-                color: Colors.white,
-              ),
-            )
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Consumer<CounterStore>(
+        builder: (_, store, __) => Stack(
+          alignment: AlignmentDirectional.topEnd,
+          children: [
+            FilledButton(
+              onPressed: () {
+                if (store.inEditMode) {
+                  store.removeIncrement(value);
+                } else {
+                  onTap.call(value);
+                }
+              },
+              child: Text('+$value'),
+            ),
+            if (store.inEditMode)
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.red.shade600,
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: const Icon(
+                  Icons.cancel,
+                  color: Colors.white,
+                ),
+              )
+          ],
+        ),
+      );
 }

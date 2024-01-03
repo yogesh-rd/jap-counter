@@ -24,10 +24,12 @@ class LocalStorage {
         _preferences.getBool(StorageKeys.wereDefaultsSet.name);
     if (wereSetBefore ?? false) return;
 
-    setHistory({});
-    setIncrements(AppConfig.defaultIncrements);
-    setGoal(AppConfig.defaultGoal);
-    setTotalCount(AppConfig.defaultTotalCount);
+    await Future.wait([
+      setHistory({}),
+      setIncrements(AppConfig.defaultIncrements),
+      setGoal(AppConfig.defaultGoal),
+      setTotalCount(AppConfig.defaultTotalCount),
+    ]);
 
     await _preferences.setBool(StorageKeys.wereDefaultsSet.name, true);
   }
@@ -54,12 +56,10 @@ class LocalStorage {
 
   static Future<bool> setIncrements(Iterable<int> increments) async =>
       _safeFunctionCall(
-        () async {
-          return await _preferences.setString(
-            StorageKeys.increments.name,
-            jsonEncode(increments.toList()),
-          );
-        },
+        () async => await _preferences.setString(
+          StorageKeys.increments.name,
+          jsonEncode(increments.toList()),
+        ),
       );
 
   static Future<Iterable<JapEntry>?> getHistory() async => _safeFunctionCall(
@@ -76,37 +76,28 @@ class LocalStorage {
 
   static Future<bool> setHistory(Iterable<JapEntry> history) async =>
       _safeFunctionCall(
-        () async {
-          return await _preferences.setString(
-            StorageKeys.history.name,
-            jsonEncode(
-              history.map((e) => e.toJson()).toList(),
-            ),
-          );
-        },
+        () async => await _preferences.setString(
+          StorageKeys.history.name,
+          jsonEncode(
+            history.map((e) => e.toJson()).toList(),
+          ),
+        ),
       );
 
   static Future<int?> getGoal() async => _safeFunctionCall(
-        () async {
-          return _preferences.getInt(StorageKeys.goal.name);
-        },
+        () async => _preferences.getInt(StorageKeys.goal.name),
       );
 
   static Future<bool> setGoal(int goal) async => _safeFunctionCall(
-        () async {
-          return await _preferences.setInt(StorageKeys.goal.name, goal);
-        },
+        () async => await _preferences.setInt(StorageKeys.goal.name, goal),
       );
 
   static Future<int?> getTotalCount() async => _safeFunctionCall(
-        () async {
-          return _preferences.getInt(StorageKeys.totalCount.name);
-        },
+        () async => _preferences.getInt(StorageKeys.totalCount.name),
       );
 
   static Future<bool> setTotalCount(int count) async => _safeFunctionCall(
-        () async {
-          return await _preferences.setInt(StorageKeys.totalCount.name, count);
-        },
+        () async =>
+            await _preferences.setInt(StorageKeys.totalCount.name, count),
       );
 }

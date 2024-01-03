@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jap_counter/stores/local_storage.dart';
 
 import 'jap_counter.dart';
+import 'stores/local_storage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -8,16 +8,13 @@ class JapCounter extends StatelessWidget {
   const JapCounter({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => CounterStore(),
-      builder: (context, child) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        darkTheme: ThemeData.dark(), // Standard dark theme
-        themeMode: ThemeMode.system,
-        initialRoute: '/counter',
-        routes: routes,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+        create: (_) => CounterStore(),
+        builder: (context, child) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          darkTheme: ThemeData.dark(), // Standard dark theme
+          initialRoute: '/counter',
+          routes: routes,
+        ),
+      );
 }

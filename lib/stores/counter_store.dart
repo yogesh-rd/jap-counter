@@ -2,8 +2,8 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
-import 'local_storage.dart';
 import '../models/jap_entry.dart';
+import 'local_storage.dart';
 
 class CounterStore extends ChangeNotifier {
   CounterStore() {
@@ -40,7 +40,7 @@ class CounterStore extends ChangeNotifier {
   }
 
   void _setTotalCountFromHistory() {
-    int sum = 0;
+    var sum = 0;
     for (final el in _history) {
       sum += el.count;
     }

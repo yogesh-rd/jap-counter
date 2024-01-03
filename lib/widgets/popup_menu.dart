@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '/stores/counter_store.dart';
-import '/routes.dart';
 import 'package:provider/provider.dart';
 
 import '../types.dart';
+import '/routes.dart';
+import '/stores/counter_store.dart';
 
 class PopupMenu extends StatelessWidget {
   const PopupMenu({super.key});
@@ -22,13 +22,11 @@ class PopupMenu extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton<PopupMenuOption>(
-      onSelected: (option) {
-        onSelected(option, context);
-      },
-      itemBuilder: (BuildContext context) {
-        return PopupMenuOption.values
+  Widget build(BuildContext context) => PopupMenuButton<PopupMenuOption>(
+        onSelected: (option) {
+          onSelected(option, context);
+        },
+        itemBuilder: (BuildContext context) => PopupMenuOption.values
             .map(
               (option) => PopupMenuItem<PopupMenuOption>(
                 key: Key(option.name),
@@ -36,8 +34,6 @@ class PopupMenu extends StatelessWidget {
                 child: Text(option.displayText),
               ),
             )
-            .toList();
-      },
-    );
-  }
+            .toList(),
+      );
 }
