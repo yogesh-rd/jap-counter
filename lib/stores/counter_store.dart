@@ -79,11 +79,9 @@ class CounterStore extends ChangeNotifier {
   List<JapEntry> get history => _history.toList();
 
   void addJapEntry(JapEntry entry) {
-    final wasAdded = _history.add(entry);
-    if (wasAdded) {
-      notifyListeners();
-      _saveHistoryToLocalStorage();
-    }
+    _history = {entry, ..._history};
+    notifyListeners();
+    _saveHistoryToLocalStorage();
   }
 
   void removeJapEntry(JapEntry entry) {
